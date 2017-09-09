@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Listing from './Listing';
+import PostDetail from './PostDetail';
 import Post from './Post';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-
+import {bindActionCreators} from 'redux';  
+import * as actions from '../actions/post';
 
 class Pager extends Component {
   render() {
@@ -17,7 +18,9 @@ class Pager extends Component {
             <div className="col-sm-8 blog-main">
               <Switch>
                 <Route exact path="/:category" render={() => (
-                  <Listing posts={this.props.posts} />
+                  <div className="listing">  
+                    <PostDetail {...this.props} />
+                  </div>
                 )} />
                 <Route path="/:category/:post" render={(props) => (
                   <Post {...props} />
@@ -39,4 +42,10 @@ function mapStateToProps(state, ownProps) {
   };
 } 
 
-export default connect(mapStateToProps)(Pager);  
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pager);  

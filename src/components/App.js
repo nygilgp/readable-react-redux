@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Listing from './Listing';
+import PostDetail from './PostDetail';
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';  
+import * as actions from '../actions/post';
 
 class App extends Component {
   render() {
@@ -12,7 +14,9 @@ class App extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-8 blog-main">
-              <Listing posts={this.props.posts} />
+              <div className="listing">  
+                <PostDetail {...this.props} />
+              </div>
             </div>
             <Sidebar categories={ this.props.categories } />
           </div>
@@ -29,4 +33,10 @@ function mapStateToProps(state, ownProps) {
   };
 } 
 
-export default connect(mapStateToProps)(App);  
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);  

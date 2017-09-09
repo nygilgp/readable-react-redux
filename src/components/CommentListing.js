@@ -85,7 +85,7 @@ class CommentListing extends Component {
 				<div className="row">
 	                <div className="col-md-12">
 	                	<div className="page-header">
-	                    	<h4><small className="pull-right">Comments</small></h4>
+	                    	<h4><small className="pull-right">Add Comment</small></h4>
 	                  	</div> 
 	                   	<form>
 	                   		<div className="form-group">
@@ -112,7 +112,7 @@ class CommentListing extends Component {
 				<div className="row">
 	                <div className="col-md-12">
 	                	<div className="page-header">
-	                    	<h4><small className="pull-right">Comments</small></h4>
+	                    	<h4><small className="pull-right">Edit Comment</small></h4>
 	                  	</div> 
 	                   	<form>
 						    <div className="form-group">

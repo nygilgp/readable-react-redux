@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { LOAD_CATEGORIES_SUCCESS } from '../actions/category'
-import { LOAD_POSTS_SUCCESS, ADD_POST, EDIT_POST, DELETE_POST, VOTE_POST } from '../actions/post'
+import { LOAD_POSTS_SUCCESS, ADD_POST, EDIT_POST, DELETE_POST, VOTE_POST, SORT_POST_BY } from '../actions/post'
 import { LOAD_COMMENTS_SUCCESS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, VOTE_COMMENT } from '../actions/comment'
 
 const initialCategories = [{
@@ -65,15 +65,27 @@ const initialPosts = [];
 function posts(state = initialPosts, action) {
 	switch(action.type) {
 		case LOAD_POSTS_SUCCESS:
-			return action.posts;
+			return action.posts.filter(post => post.deleted === false);
 		case ADD_POST:
-			return state;
-		case EDIT_POST:
-			return state;
+			state.push(action.response);
+			return [
+				...state
+			];
 		case DELETE_POST:
-			return state;
+			let postIndex = state.findIndex((post) => post.id === action.id);
+			state.splice(postIndex, 1);
+			return [
+				...state
+			];
+		case EDIT_POST:
 		case VOTE_POST:
-			return state;
+			postIndex = state.findIndex((post) => post.id === action.id);
+			state[postIndex] = action.response;
+			return [
+				...state
+			];
+		case SORT_POST_BY:
+			return action.posts.filter(post => post.deleted === false);
 		default:
 			return state;
 	}

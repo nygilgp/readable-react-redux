@@ -12,40 +12,7 @@ import { loadCategories } from './actions/category';
 import { loadPosts } from './actions/post';
 import { IntlProvider } from 'react-intl';
 
-
 /*
-import { getCategories } from './utils/category';
-
-let cc = getCategories().then(d => console.log(d));
-*/
-
-
-/*
-import { getPosts, addPost, deletePost } from './utils/post';
-import { getPostComments, voteComment, updateComment, deleteComment } from './utils/comment';
-
-let dataAdd = addPost('nygil 1st post', 'lorem ipsum post data here..', 'nygil', 'react');
-dataAdd.then(d => console.log(d));
-
-let dataup = updatePost("zusr2def59bo2kto7k89t", 'nygil 2nd post', '2nd lorem ipsum post data here..');
-dataup.then(d => console.log(d));
-
-
-let ddata = deletePost("l1f2afgndik46qxp2nbk8t");
-console.log(ddata);
-
-
-let data = getPosts();
-data.then(d => console.log(d));
-
-let vdata = deleteComment("xnqltopbwyos2wsqtk55p");
-vdata.then(d => console.log(d));
-
-
-let datac = getPostComments("8xf0y6ziyjabvozdd253nd");
-datac.then(d => console.log(d));
-
-
 const logger = store => next => action => {
   console.group(action.type)
   console.info('dispatching', action)
@@ -55,7 +22,6 @@ const logger = store => next => action => {
   return result
 }
 */
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
