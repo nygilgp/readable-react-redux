@@ -6,28 +6,8 @@ A blog app done to demonstrate react and redux capability
 
 The application requires only npm install and npm start to install and launch.
 
-Plan
-/ root 
-All Post listing per category, with add Post button in listing page
-Sort by date, sort by vote
-vote per post
-edit/delete per post buttons
-
-/:category
-Category listing
-Same function as above
-
-/:category/:post_id
-Post detail page, with add comments and comment listing, with edit & delete buttons, vote button
-Edit post, populate existing data and update action
-Delete Post, makes link inaccesible
-Delete comment
-Edit comment
-vote per comment
-
-Navigate to all pages possible
-
-
+Once server is running in http://localhost:5001, the app will work. 
+If it is running in a different URL, please change it in utils/index.js file const API_URL
 
 
 React
