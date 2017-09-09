@@ -5,39 +5,40 @@ class CommentListing extends Component {
 	    super(props, context);
 	    this.state = {
 	    	isEditing: false,
-	    	comments: this.props.comments
+	    	editCommentId: null,
+	    	body: '',
+	    	author: ''
 	    };
 	    this.toggleEdit = this.toggleEdit.bind(this);
-	    this.updateCommentState = this.updateCommentState.bind(this);
+	    this.updateBodyState = this.updateBodyState.bind(this);
 	    this.saveComment = this.saveComment.bind(this);
 	}
 
-	toggleEdit() {
-		this.setState({isEditing: !this.state.isEditing});
+	toggleEdit(id, body) {
+		this.setState({
+			isEditing: !this.state.isEditing,
+			editCommentId: id,
+			body: body
+		});
 	}
 
-	updateCommentState(event) {
-	    const field = event.target.name;
-	    const comments = this.state.comments;
-	    console.log(comments);
-	    console.log(field);
-	    //return this.setState({comments: comments});
+	updateBodyState(body) {
+	    this.setState({body});
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (this.props.comments.length !== nextProps.comments.length) {
-      		this.setState({comments: nextProps.comments});
-    	}
-	}
-
-	saveComment() {
-		//event.preventDefault();
-    	//this.props.actions.updateComment(this.state.comments);
+	saveComment(event) {
+		event.preventDefault();
+    	this.props.commentActions.updateComment(this.state.editCommentId, this.state.body);
+    	this.setState({
+    		isEditing: !this.state.isEditing,
+			editCommentId: null,
+			body: ''
+    	});
 	}
 
 	render() {
 		const { comments } = this.props;
-		const { isEditing } = this.state;
+		const { isEditing, body } = this.state;
 		if( isEditing ) {
 			return (
 				<div className="row">
@@ -47,14 +48,15 @@ class CommentListing extends Component {
 	                  	</div> 
 	                   	<form>
 						    <div className="form-group">
-						      <label htmlFor="comment">Comment:</label>
-						      <textarea className="form-control" rows="5" id="comment"></textarea>
+						      <label htmlFor="body">Comment:</label>
+						      <textarea className="form-control" rows="5" id="body"
+						       value={ body } onChange={(event) => this.updateBodyState(event.target.value)} ></textarea>
 						    </div>
 						    <input
 					            type="submit"
 					            className="btn btn-primary"
-					            onClick={this.saveComment}/> 
-					        <button className="btn" onClick={this.toggleEdit}>Cancel</button>
+					            onClick={(event) => this.saveComment(event)}/> 
+					        <button className="btn" onClick={(event) => this.toggleEdit(null, '')}>Cancel</button>
 						</form>
 	                </div>
 	            </div>
@@ -74,7 +76,7 @@ class CommentListing extends Component {
 									<h4 className="media-heading user_name">{ comment.author }</h4>
 		                            { comment.body }
 		                            <p><small><span>{ comment.voteScore } Votes</span> - <a href="#">Up Vote</a> - <a href="#">Down Vote</a>
-		                             - <button onClick={this.toggleEdit}>edit</button></small></p>
+		                             - <button className="btn" onClick={(event) => this.toggleEdit(event.target.value, comment.body)} value={ comment.id }>edit</button></small></p>
 	                            </div>
 	                        </div>
 	                    ))}

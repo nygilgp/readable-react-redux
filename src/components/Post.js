@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//import { loadComments, editComment } from '../actions/comment';
 import {bindActionCreators} from 'redux';  
 import * as commentActions from '../actions/comment';
 import CommentListing from './CommentListing';
@@ -43,10 +42,6 @@ function mapStateToProps(state, ownProps) {
 } 
 
 function mapDispatchToProps(dispatch) {
-  /*return {
-    fetchComments: (data) => dispatch(loadComments(data)),
-    callUpdateCommment: (id, body) => dispatch(editComment(id, body))
-  }*/
   return {
     commentActions: bindActionCreators(commentActions, dispatch)
   };

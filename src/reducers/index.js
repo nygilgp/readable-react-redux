@@ -49,7 +49,7 @@ const initialComments = {};
 function comments(state = initialComments, action) {
 	switch(action.type) {
 		case LOAD_COMMENTS_SUCCESS:
-			const { parentId, comments } = action;
+			let { parentId, comments } = action;
 			return {
 				...state,
 				[parentId]: comments
@@ -57,11 +57,10 @@ function comments(state = initialComments, action) {
 		case ADD_COMMENT:
 			return state;
 		case EDIT_COMMENT:
+			parentId = action.response.parentId;
+			let commentIndex = state[parentId].findIndex((comment, index) => comment.id === action.id);
+			state[parentId][commentIndex] = action.response;
 			return state;
-			/*{
-		        ...state.filter(comment => comment.id !== action.comment.id),
-		        Object.assign({}, action.comment)
-		      }*/
 		case DELETE_COMMENT:
 			return state;
 		case VOTE_COMMENT:
