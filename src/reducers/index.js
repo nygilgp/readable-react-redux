@@ -25,6 +25,41 @@ function categories(state = initialCategories, action) {
 	}
 }
 
+const initialComments = {};
+
+function comments(state = initialComments, action) {
+	switch(action.type) {
+		case LOAD_COMMENTS_SUCCESS:
+			let { parentId, comments } = action;
+			return {
+				...state,
+				[parentId]: comments
+			}
+		case ADD_COMMENT:
+			state[action.parentId].push(action.response);
+			return {
+				...state
+			};
+		case EDIT_COMMENT:
+		case VOTE_COMMENT:
+			parentId = action.response.parentId;
+			let commentIndex = state[parentId].findIndex((comment, index) => comment.id === action.id);
+			state[parentId][commentIndex] = action.response;
+			return {
+				...state
+			};
+		case DELETE_COMMENT:
+			parentId = action.parentId;
+			commentIndex = state[parentId].findIndex((comment, index) => comment.id === action.id);
+			state[parentId].splice(commentIndex, 1);
+			return {
+				...state
+			};
+		default:
+			return state;
+	}
+}
+
 const initialPosts = [];
 
 function posts(state = initialPosts, action) {
@@ -38,32 +73,6 @@ function posts(state = initialPosts, action) {
 		case DELETE_POST:
 			return state;
 		case VOTE_POST:
-			return state;
-		default:
-			return state;
-	}
-}
-
-const initialComments = {};
-
-function comments(state = initialComments, action) {
-	switch(action.type) {
-		case LOAD_COMMENTS_SUCCESS:
-			let { parentId, comments } = action;
-			return {
-				...state,
-				[parentId]: comments
-			}
-		case ADD_COMMENT:
-			return state;
-		case EDIT_COMMENT:
-			parentId = action.response.parentId;
-			let commentIndex = state[parentId].findIndex((comment, index) => comment.id === action.id);
-			state[parentId][commentIndex] = action.response;
-			return state;
-		case DELETE_COMMENT:
-			return state;
-		case VOTE_COMMENT:
 			return state;
 		default:
 			return state;

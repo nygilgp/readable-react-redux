@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-//import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 class Listing extends Component {
-	// { console.log(this.props.match.params.category) }
 	render() {
 		const { posts } = this.props;
 		return (
@@ -19,7 +17,5 @@ class Listing extends Component {
 		)
 	}
 }
-
-// <Moment format="MMMM DD, YYYY">{ post.timestamp }</Moment>
 
 export default Listing;

@@ -27,12 +27,23 @@ export function loadCommentsSuccess(parentId, comments) {
 	}
 }
 
-export function addComment({ body, author, parentId }) {
+export function createComment(body, author, parentId) {
+	return function(dispatch) {
+		return commentsApi.addComment(parentId, body, author)
+		.then(response => {
+			dispatch(addComment(parentId, response));
+		})
+		.catch(error => {
+			throw(error)
+		});
+	}
+}
+
+export function addComment(parentId, response) {
 	return {
 		type: ADD_COMMENT,
-		body,
-		author,
-		parentId
+		parentId,
+		response
 	}
 }
 
@@ -56,17 +67,43 @@ export function editComment(id, response) {
 	}
 }
 
-export function deleteComment({ id }) {
-	return {
-		type: DELETE_COMMENT,
-		id
+export function removeComment(id, parentId) {
+	return function(dispatch) {
+		return commentsApi.deleteComment(id)
+		.then(response => {
+			dispatch(deleteComment(id, parentId, response));
+		})
+		.catch(error => {
+			throw(error)
+		});
 	}
 }
 
-export function voteComment({ id, option }) {
+export function deleteComment(id, parentId, response) {
+	return {
+		type: DELETE_COMMENT,
+		id,
+		parentId,
+		response
+	}
+}
+
+export function updateVote(id, option) {
+	return function(dispatch) {
+		return commentsApi.voteComment(id, option)
+		.then(response => {
+			dispatch(voteComment(id, response));
+		})
+		.catch(error => {
+			throw(error)
+		});
+	}
+}
+
+export function voteComment(id, response) {
 	return {
 		type: VOTE_COMMENT,
 		id,
-		option
+		response
 	}
 }

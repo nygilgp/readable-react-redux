@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { loadCategories } from './actions/category';
 import { loadPosts } from './actions/post';
+import { IntlProvider } from 'react-intl';
 
 
 /*
@@ -65,17 +66,16 @@ const store = createStore(
   )
 );
 
-//
 store.dispatch(loadPosts());
 store.dispatch(loadCategories());
 
-ReactDOM.render(<Provider store={store}>
+ReactDOM.render(<Provider store={store}><IntlProvider locale="en">
 	<BrowserRouter>
 		<Switch>
 			<Route exact path="/" component={App} />
 			<Route path="/:category" component={Pager} />
 		</Switch>
-	</BrowserRouter>
+	</BrowserRouter></IntlProvider>
 </Provider>, document.getElementById('root'));
 registerServiceWorker();
 

@@ -79,7 +79,7 @@ class commentsApi {
 			},
 			method: 'DELETE'
 		})
-		//.then(res => res)
+		.then(res => res)
 		.catch(err => console.log(err));
 	}
 }
