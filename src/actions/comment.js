@@ -1,11 +1,5 @@
 import commentsApi from '../utils/commentsApi';
-
-export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const EDIT_COMMENT = 'EDIT_COMMENT';
-export const DELETE_COMMENT = 'DELETE_COMMENT';
-export const VOTE_COMMENT = 'VOTE_COMMENT';
-
+import * as types from './actionTypes';
 
 export function loadComments(postId) {
 	return function(dispatch) {
@@ -21,7 +15,7 @@ export function loadComments(postId) {
 
 export function loadCommentsSuccess(parentId, comments) {
 	return {
-		type: LOAD_COMMENTS_SUCCESS,
+		type: types.LOAD_COMMENTS_SUCCESS,
 		parentId,
 		comments
 	}
@@ -41,7 +35,7 @@ export function createComment(body, author, parentId) {
 
 export function addComment(parentId, response) {
 	return {
-		type: ADD_COMMENT,
+		type: types.ADD_COMMENT,
 		parentId,
 		response
 	}
@@ -61,7 +55,7 @@ export function updateComment(id, body) {
 
 export function editComment(id, response) {
 	return {
-		type: EDIT_COMMENT,
+		type: types.EDIT_COMMENT,
 		id,
 		response
 	}
@@ -81,7 +75,7 @@ export function removeComment(id, parentId) {
 
 export function deleteComment(id, parentId, response) {
 	return {
-		type: DELETE_COMMENT,
+		type: types.DELETE_COMMENT,
 		id,
 		parentId,
 		response
@@ -102,7 +96,7 @@ export function updateVote(id, option) {
 
 export function voteComment(id, response) {
 	return {
-		type: VOTE_COMMENT,
+		type: types.VOTE_COMMENT,
 		id,
 		response
 	}

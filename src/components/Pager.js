@@ -7,9 +7,14 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import {bindActionCreators} from 'redux';  
 import * as actions from '../actions/post';
+import NoMatch from './NoMatch';
 
 class Pager extends Component {
+  
   render() {
+    const { isValidCategory } = this.props;
+    let listing = isValidCategory ? <PostDetail {...this.props} /> : <NoMatch />;
+    
     return (
       <div>
         <Header />
@@ -19,7 +24,7 @@ class Pager extends Component {
               <Switch>
                 <Route exact path="/:category" render={() => (
                   <div className="listing">  
-                    <PostDetail {...this.props} />
+                    {listing}
                   </div>
                 )} />
                 <Route path="/:category/:post" render={(props) => (
@@ -35,10 +40,12 @@ class Pager extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps({ categories, posts }, ownProps) {
+  let isValidCategory = (categories.filter(category => category.path === ownProps.match.params.category)).length === 1;
   return {
-    categories: state.categories,
-    posts: state.posts.filter((post) => post.category === ownProps.match.params.category)
+    categories,
+    posts: posts.filter((post) => post.category === ownProps.match.params.category),
+    isValidCategory
   };
 } 
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedDate } from 'react-intl';
+import { Redirect } from 'react-router';
 
 class PostDetail extends Component {
 	
@@ -9,6 +10,7 @@ class PostDetail extends Component {
 	    this.state = {
 	    	isEditing: false,
 	    	isAdding: false,
+	    	isDeleteSuccess: false,
 	    	editPostId: null,
 	    	body: '',
 	    	title: '',
@@ -22,6 +24,7 @@ class PostDetail extends Component {
 	   	this.deletePost = this.deletePost.bind(this);
 	   	this.updateBodyState = this.updateBodyState.bind(this);
 	   	this.savePost = this.savePost.bind(this);
+	   	this.updatePost = this.updatePost.bind(this);
 
 	}
 
@@ -54,6 +57,20 @@ class PostDetail extends Component {
     	});
 	}
 
+	updatePost(event) {
+		event.preventDefault();
+		const { title, body, editPostId } = this.state;
+    	this.props.actions.updatePost(editPostId, title, body);
+    	this.setState({
+    		isEditing: !this.state.isEditing,
+			editPostId: null,
+			body: '',
+			title: '',
+			author: '',
+			category: ''
+    	});
+	}
+
 	updateBodyState(body) {
 	    this.setState({body});
 	}
@@ -76,6 +93,7 @@ class PostDetail extends Component {
 
 	deletePost(id) {
 		this.props.actions.removePost(id);
+		this.setState({isDeleteSuccess: true});
 	}
 
 	sortBy(option) {
@@ -84,7 +102,7 @@ class PostDetail extends Component {
 
 	render() {
 		const { posts, categories } = this.props;
-		const { isEditing, isAdding, title, body, author  } = this.state;
+		const { isEditing, isAdding, title, body, author, isDeleteSuccess  } = this.state;
 
 		let loadAdd = <button className="btn" onClick={(event) => this.toggleAdd()} >Add Post</button>
 		let sortByDate = <button className="btn" onClick={(event) => this.sortBy("date")} >Sort by Date</button>
@@ -95,8 +113,10 @@ class PostDetail extends Component {
 			sortByDate = '';
 			sortByVote = '';
 		}
-
-		if ( isAdding ) {
+		
+		if( isDeleteSuccess && this.props.match.params.post ) {
+			return (<Redirect to="/" />);
+		} else if ( isAdding ) {
 			return (
 				<div className="row">
 	                <div className="col-md-12">
@@ -158,7 +178,7 @@ class PostDetail extends Component {
 						    <input
 					            type="submit"
 					            className="btn btn-primary"
-					            onClick={(event) => this.savePost(event)}/> 
+					            onClick={(event) => this.updatePost(event)}/> 
 					        <button className="btn" onClick={(event) => this.toggleEdit(null, '', '')}>Cancel</button>
 						</form>
 	                </div>

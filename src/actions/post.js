@@ -1,11 +1,5 @@
 import postsApi from '../utils/postsApi';
-
-export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
-export const ADD_POST = 'ADD_POST';
-export const EDIT_POST = 'EDIT_POST';
-export const DELETE_POST = 'DELETE_POST';
-export const VOTE_POST = 'VOTE_POST';
-export const SORT_POST_BY = 'SORT_POST_BY';
+import * as types from './actionTypes';
 
 export function loadPosts() {
 	return function(dispatch) {
@@ -21,7 +15,7 @@ export function loadPosts() {
 
 export function loadPostsSuccess(posts) {
 	return {
-		type: LOAD_POSTS_SUCCESS,
+		type: types.LOAD_POSTS_SUCCESS,
 		posts
 	}
 }
@@ -40,7 +34,7 @@ export function createPost(title, body, author, category) {
 
 export function addPost(response) {
 	return {
-		type: ADD_POST,
+		type: types.ADD_POST,
 		response
 	}
 }
@@ -59,7 +53,7 @@ export function updatePost(id, title, body) {
 
 export function editPost(id, response) {
 	return {
-		type: EDIT_POST,
+		type: types.EDIT_POST,
 		id,
 		response
 	}
@@ -79,7 +73,7 @@ export function removePost(id) {
 
 export function deletePost(id) {
 	return {
-		type: DELETE_POST,
+		type: types.DELETE_POST,
 		id
 	}
 }
@@ -98,7 +92,7 @@ export function updateVote(id, option) {
 
 export function votePost(id, response) {
 	return {
-		type: VOTE_POST,
+		type: types.VOTE_POST,
 		id,
 		response
 	}
@@ -125,7 +119,7 @@ export function postSortBy(option) {
 
 export function sortBy(posts) {
 	return {
-		type: SORT_POST_BY,
+		type: types.SORT_POST_BY,
 		posts
 	}
 }

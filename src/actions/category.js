@@ -1,10 +1,9 @@
 import categoriesApi from '../utils/categoriesApi';
-
-export const LOAD_CATEGORIES_SUCCESS = 'LOAD_CATEGORIES_SUCCESS';
+import * as types from './actionTypes';
 
 export function loadCategoriesSuccess(categories) {
 	return {
-		type: LOAD_CATEGORIES_SUCCESS,
+		type: types.LOAD_CATEGORIES_SUCCESS,
 		categories
 	}
 }
